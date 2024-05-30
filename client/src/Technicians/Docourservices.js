@@ -136,6 +136,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Nav from '../Components/technav';
+import{ jwtDecode }from 'jwt-decode';
 
 const PRODUCTS_PER_PAGE = 10;
 
@@ -143,24 +144,42 @@ const ProductCard = () => {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [userName, setUserName] = useState('');
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    // Decode the token and extract the username
+    const token = localStorage.getItem('auth-token');
+    if (token) {
       try {
-        const response = await fetch('http://localhost:3001/products/all');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
+        const decodedToken = jwtDecode(token);
+        if (decodedToken.userName) {
+          setUserName(decodedToken.userName);
+          fetchProducts(decodedToken.userName);
+        } else {
+          setError('User not authenticated.');
         }
-        const data = await response.json();
-        setProducts(data);
       } catch (error) {
-        console.error('Error fetching products:', error);
-        setError('Failed to load products.');
+        console.error('Error decoding JWT token:', error);
+        setError('Failed to decode token.');
       }
-    };
-
-    fetchProducts();
+    } else {
+      setError('User not authenticated.');
+    }
   }, []);
+
+  const fetchProducts = async (userName) => {
+    try {
+      const response = await fetch(`http://localhost:3001/Products/user/${userName}`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      setProducts(data);
+    } catch (error) {
+      console.error('Error fetching products:', error);
+      setError('Failed to load products.');
+    }
+  };
 
   if (error) {
     return (
@@ -187,15 +206,12 @@ const ProductCard = () => {
       <header className="doctor-header">
         <h1 style={{ fontSize: '90px', textAlign: 'center', fontWeight: 'bold', color: '#0e0737' }}>Products</h1>
       </header>
-      <div className="doctor-list" style={{padding: '30px'}}>
+      <div className="doctor-list" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
         {currentProducts.map(product => (
           <div key={product._id} className="doctor-card" style={{ margin: '10px', border: '1px solid #ccc', padding: '20px', width: '300px' }}>
             <img src={product.imageUrl} alt={product.productName} style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
             <h3>{product.productName}</h3>
             <p>Price: LKR{product.price}</p>
-            <button onClick={() => handleOrder(product._id)} style={{  color: 'white', padding: '10px 20px', border: 'none', cursor: 'pointer' }}>
-              Order
-            </button>
           </div>
         ))}
       </div>
@@ -227,4 +243,5 @@ const ProductCard = () => {
 };
 
 export default ProductCard;
+
 

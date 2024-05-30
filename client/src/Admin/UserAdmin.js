@@ -154,7 +154,7 @@ function UserTable() {
                             {/* <th>Bio</th> */}
                             {/* <th>Profile Image</th> */}
                             {/* <th>Signature Image</th> */}
-                            <th>Actions</th>
+                            {/* <th>Actions</th> */}
                             {/* <th>Verification</th> */}
                         </tr>
                     </thead>
@@ -174,10 +174,10 @@ function UserTable() {
                                 <td>
                                     <img src={user.signatureImage} alt="Signature" style={{ width: "50px", height: "50px" }} />
                                 </td> */}
-                                <td>
+                                {/* <td>
                                     <button onClick={() => openEditModal(user)}>Edit</button>
                                     <button onClick={() => deleteUser(user._id)}>Delete</button>
-                                </td>
+                                </td> */}
                                 {/* <td>
                                     {user.isVerified ? 'Verified' : <button onClick={() => verifyUser(user._id)}>Verify</button>}
                                 </td> */}

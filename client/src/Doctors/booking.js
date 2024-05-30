@@ -766,7 +766,7 @@ function BookingForm() {
             throw new Error('Payment failed');
           }
         } catch (error) {
-          toast.error('Payment failed. Please try again.', { position: 'bottom-right' });
+        //   toast.error('Payment failed. Please try again.', { position: 'bottom-right' });
           console.error(error);
         }
       };

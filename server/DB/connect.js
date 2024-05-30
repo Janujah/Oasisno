@@ -15,6 +15,7 @@ const Email = require('../Routes/emailRoutes')
 const appointmentRoutes = require('../Routes/appointment');
 const countRoutes = require('../Routes/counroutes');
 const productRoutes = require('../Routes/productroutes')
+const orderRoutes = require('../Routes/OrderRoutes');
 const bodyParser = require('body-parser');
 const envurl = process.env.mongodbUrl;
 const stripe = require('stripe')(process.env.STRIPE_SECRET)
@@ -39,6 +40,9 @@ app.use('/count',countRoutes)
 app.use('/Email', Email)
 app.use('/appointments', appointmentRoutes);
 app.use('/Products',productRoutes)
+app.use('/order',orderRoutes)
+
+
 app.use(bodyParser.json());
 // const { createProxyMiddleware } = require('http-proxy-middleware');
 

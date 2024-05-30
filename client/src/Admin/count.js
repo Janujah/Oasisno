@@ -52,24 +52,24 @@ function AdminDashboard() {
       <Navbar />
       <div className="counts-container">
         <div className="count-card">
-          <h3>Users</h3>
-          <p>{counts.users}</p>
+          <p style={{fontSize:'30px', color:'white'}}>{counts.users}</p>
+          <h3 style={{fontSize:'30px', color:'white'}}>Users</h3>
         </div>
         <div className="count-card">
-          <h3>Doctors</h3>
-          <p>{counts.doctors}</p>
+          <p style={{fontSize:'30px', color:'white'}}>{counts.doctors}</p>
+          <h3 style={{fontSize:'30px', color:'white'}}>Doctors</h3>
         </div>
         <div className="count-card">
-          <h3>Ortho Resources</h3>
-          <p>{counts.technicians}</p>
+          <p style={{fontSize:'30px', color:'white'}}>{counts.technicians}</p>
+          <h3 style={{fontSize:'30px', color:'white'}}>Ortho Resources</h3>
         </div>
         <div className="count-card">
-          <h3>Consumers</h3>
-          <p>{counts.consumers}</p>
+          <p style={{fontSize:'30px', color:'white'}}>{counts.consumers}</p>
+          <h3 style={{fontSize:'30px', color:'white'}}>Consumers</h3>
         </div>
         <div className="count-card">
-          <h3>Payments</h3>
-          <p>{counts.payments}</p>
+          <p style={{fontSize:'30px', color:'white'}}>{counts.payments}</p>
+          <h3 style={{fontSize:'30px', color:'white'}}>Payments</h3>
         </div>
       </div>
     </div>

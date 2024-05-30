@@ -83,14 +83,23 @@
 
 import React, { useState, useEffect } from 'react';
 import Navbar from '../Components/nav'; // Ensure the component import matches the actual file name and path.
+import {jwtDecode} from 'jwt-decode';
 
 function UserTable() {
     const [users, setUsers] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(15); // This does not change, so no setter is needed.
     const [editFormData, setEditFormData] = useState(null);
+    const [doctorName, setDoctorName] = useState('');
 
     useEffect(() => {
+        // Extract the username from the JWT token
+        const token = localStorage.getItem('auth-token'); // Assuming you store your token in localStorage
+        if (token) {
+            const decodedToken = jwtDecode(token);
+            setDoctorName(decodedToken.userName); // Adjust based on your token's structure
+        }
+
         const fetchUsers = async () => {
             try {
                 const response = await fetch('http://localhost:3001/consult/view');
@@ -111,10 +120,12 @@ function UserTable() {
         return () => newSocket.close();
     }, []);
 
+    const filteredUsers = users.filter(user => user.doctorName === doctorName);
+
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = users.slice(indexOfFirstItem, indexOfLastItem);
-    const totalPages = Math.ceil(users.length / itemsPerPage);
+    const currentItems = filteredUsers.slice(indexOfFirstItem, indexOfLastItem);
+    const totalPages = Math.ceil(filteredUsers.length / itemsPerPage);
 
     const handlePageChange = pageNumber => {
         setCurrentPage(pageNumber);
