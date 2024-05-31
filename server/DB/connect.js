@@ -14,7 +14,8 @@ const stripeRoutes = require('../Routes/striperoutes');
 const Email = require('../Routes/emailRoutes')
 const appointmentRoutes = require('../Routes/appointment');
 const countRoutes = require('../Routes/counroutes');
-const productRoutes = require('../Routes/productroutes')
+const productRoutes = require('../Routes/productroutes');
+const productOrderRoutes = require('../Routes/productOrderRoutes');
 const orderRoutes = require('../Routes/OrderRoutes');
 const bodyParser = require('body-parser');
 const envurl = process.env.mongodbUrl;
@@ -41,6 +42,9 @@ app.use('/Email', Email)
 app.use('/appointments', appointmentRoutes);
 app.use('/Products',productRoutes)
 app.use('/order',orderRoutes)
+app.use('/Resource',productOrderRoutes)
+
+
 
 
 app.use(bodyParser.json());
